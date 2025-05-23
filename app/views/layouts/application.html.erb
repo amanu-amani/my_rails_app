@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<%# app/views/layouts/application.html.erb %>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Rails App</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+<body>
+
+  <header>
+    <h1>My Awesome Rails App</h1>
+
+    <%# --- Visit Time Tracking Display --- %>
+    <% if session[:last_visited] %>
+      <% time_ago = Time.current - session[:last_visited] %>
+      <% if time_ago < 60 %>
+        <p>Last visited: Less than a minute ago</p>
+      <% elsif time_ago < 3600 %>
+        <p>Last visited: <%= (time_ago / 60).to_i %> minutes ago</p>
+      <% else %>
+        <p>Last visited: <%= (time_ago / 3600).to_i %> hours ago</p>
+      <% end %>
+    <% end %>
+    <%# --- End Visit Time Tracking Display --- %>
+
+  </header>
+
+  <main>
+    <%= yield %>
+  </main>
+
+  <footer>
+    <p>This is a footer.</p>
+  </footer>
+
+</body>
+</html>
+<%# app/views/layouts/application.html.erb %>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Rails App</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+<body>
+
+  <header>
+    <h1>My Awesome Rails App</h1>
+
+    <%# --- Visit Time Tracking Display (already there) --- %>
+    <% if session[:last_visited] %>
+      <% time_ago = Time.current - session[:last_visited] %>
+      <% if time_ago < 60 %>
+        <p>Last visited: Less than a minute ago</p>
+      <% elsif time_ago < 3600 %>
+        <p>Last visited: <%= (time_ago / 60).to_i %> minutes ago</p>
+      <% else %>
+        <p>Last visited: <%= (time_ago / 3600).to_i %> hours ago</p>
+      <% end %>
+    <% end %>
+    <%# --- End Visit Time Tracking Display --- %>
+
+    <hr> <%# Optional: for visual separation %>
+
+    <%# --- Visit Counters Display (Add these lines) --- %>
+    <% if session[:visit_count] %>
+      <p>Total visits: <%= session[:visit_count] %></p>
+    <% end %>
+
+    <%
+      # Dynamically get the page-specific key based on the current request path
+      current_page_key = "visits_#{request.path.parameterize.underscore}"
+    %>
+    <% if session[current_page_key] %>
+      <p>Visits to this page: <%= session[current_page_key] %></p>
+    <% end %>
+    <%# --- End Visit Counters Display --- %>
+
+  </header>
+
+  <main>
+    <%= yield %>
+  </main>
+
+  <footer>
+    <p>This is a footer.</p>
+  </footer>
+
+</body>
+</html>
+<%# app/views/layouts/application.html.erb %>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Rails App</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  #<%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+<body>
+
+  <header>
+    <h1>My Awesome Rails App</h1>
+
+    <%# --- Time-based Greeting (Add this line) --- %>
+    <p><%= time_based_greeting %></p>
+    <%# --- End Time-based Greeting --- %>
+
+    <%# --- Visit Time Tracking Display (already there) --- %>
+    <% if session[:last_visited] %>
+      <p>Last visited: <%# ... (your existing time logic) ... %></p>
+    <% end %>
+
+    <hr>
+
+    <%# --- Visit Counters Display (already there) --- %>
+    <% if session[:visit_count] %>
+      <p>Total visits: <%= session[:visit_count] %></p>
+    <% end %>
+    <%
+      current_page_key = "visits_#{request.path.parameterize.underscore}"
+    %>
+    <% if session[current_page_key] %>
+      <p>Visits to this page: <%= session[current_page_key] %></p>
+    <% end %>
+    <%# --- End Visit Counters Display --- %>
+
+  </header>
+
+  <main>
+    <%= yield %>
+  </main>
+
+  <footer>
+    <p>This is a footer.</p>
+  </footer>
+
+</body>
+</html>
